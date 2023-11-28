@@ -41,8 +41,8 @@ Users can chat with each other as long as they're friends. They can remove and e
 | `/login`  | `LoginPage`  | Anonymous only | User enters their valid email and password to login. Will be taken to their profile page. |
 | `/profile`  | `ProfilePage`  | Private route. | Users Profile page that allows them to post status updates, edit/view their information, manage their friend list |
 | `/profile-edit`  | `ProfileEdit`  | Private route. | Where users can edit their information. |
-| `/users`  | `UsersListPage`  | Private route. | Can view/search a list of all registered members to add as a friend |
-| `/users/:id`  | `UserPage`  | Private route.| Can see other user's profiles and your own.  |
+| `/user/all`  | `UsersListPage`  | Private route. | Can view/search a list of all registered members to add as a friend |
+| `/user/:id`  | `UserPage`  | Private route.| Can see other user's profiles and your own.  |
 | `/communities`  | `CommunitiesList`  | Private route| Shows a list of all available communities to join |
 | `/community/id`  | `Community`  | Private route| Community Page |
 | `/chat`  | `Chat`  | Private route| Opens the users Chat page where they can see all their conversations (or lack of) with various users  |
@@ -100,7 +100,7 @@ Users can chat with each other as long as they're friends. They can remove and e
 {
     name: {type: String, required: true, unique: true},
     email: { type: String, required: true, unique: true },
-    password: { type: String, required: true }.
+    password: { type: String, required: true },
     friendList: [{type: Schema.Types.ObjectId, ref: "User"}],
     communities: [{type: Schema.Types.ObjectId, ref: "Community"}],
     userDetails: {
@@ -128,12 +128,14 @@ Users can chat with each other as long as they're friends. They can remove and e
     communityBio: {type: String, required: true},
     communityAdmin: [{type: Schema.Types.ObjectId, ref: "User"}],
     communityMembers: [{type: Schema.Types.ObjectId, ref: "User"}],
-    communityContent: [{
-      post: [{
-                type: String, 
-                comments: [{commentMsg: String, commentAuthor:{type:  Schema.Types. ObjectId, ref: "User" }]}]
-            }]
-    }
+    communityContent: [ 
+        {
+            post: String,
+            comments : [{userComment: String, commentAuthor: [{type: Schema.Types.ObjectId, ref: "User"}]}]
+        }
+    ]
+
+}
 ``` 
 
 
