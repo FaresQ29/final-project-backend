@@ -4,7 +4,7 @@ const User = require("../models/user.model")
 const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken")
 const {url} = require("../config.js")
-
+const checkToken = require("../middleware/checkToken")
 //to set the token expiry to 3 days
 const maxAge = 3*24*60*60;
 
@@ -60,5 +60,23 @@ router.post("/login", async (req, res, next)=>{
         res.status(401).json({msg: "Cannot login"})
     }
 })
+
+router.get('/verify', checkToken, async (req, res, next) => {       
+    const {id} = req.payload
+    try{
+        const user = await User.findById(id)
+        res.status(200).json({token: req.token, user});
+        console.log("token worked");
+      
+    }
+    catch(err){
+        res.status(400).json({msg: "could not verify user"})
+        console.log("token didn't work");
+
+    }
+});
+
+
+
 
 module.exports = router

@@ -12,13 +12,8 @@ mongoConnect(app)
 
 
 //---------------------Routes---------------------
-app.get("/", async (req, res)=>{
-    try{
-        res.send("home")
-    }
-    catch(err){
-
-    }
+app.get("/test", (req, res)=>{
+    res.send("verified!")
 })
 //User Routes
 const userRoutes = require("./routes/userRoutes")

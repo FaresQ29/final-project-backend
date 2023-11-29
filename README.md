@@ -115,8 +115,8 @@ Users can chat with each other as long as they're friends. They can remove and e
 ```javascript
 {
     chatLogs: [{text: String, date: Date()}],
-    userOne: [{type: Schema.Types.ObjectId, ref: "User"}],
-    userTwo: [{type: Schema.Types.ObjectId, ref: "User"}]
+    userOne: {type: Schema.Types.ObjectId, ref: "User"},
+    userTwo: {type: Schema.Types.ObjectId, ref: "User"}
 }
 ```
 
@@ -147,15 +147,15 @@ Users can chat with each other as long as they're friends. They can remove and e
 | POST        | `/auth/register`    | {name, email, password}            | 200            | 404          | Registers a new user to the backend|
 | POST        | `/auth/login`          | {username, password}         | 200            | 401          | Checks if fields not empty (422), if user exists (404), and if password matches (404), then stores user | 
 | POST        | `/auth/logout`         |                              | 204            | 400          | Logs out the user  |
-| GET         | `/users`     |            |            200    | 404          | Gets all users   |
+| GET         | `/user/all`     |            |            200    | 404          | Gets all users   |
 | GET         | `/user/:id`     |            |            201    | 400          | Gets specific user   |
 | PUT         | `/user/:id`   | { name, bio }                | 201            | 400          | edit player                                                  |
 | GET         | `/communities`     |            |                | 400          | Shows all communities       |
 | GET         | `/community/:id` |                              |                |              | Show specific community                                  |
 | POST        | `/communities`     | { communityName, communityBio}       | 201            | 400          | Create and save a new community                          |
-| PUT        | `/community/:id`    | { communityId,  editedCommunity}       | 200           | 400          | edits a community  |
+| PUT         | `/community/:id`    | { communityId,  editedCommunity}       | 200           | 400          | edits a community  |
 | DELETE      | `/community/:id` |         | 201            | 400          | delete community                                           |
-| GET         | `/chat/:id` |                              |                |              | Shows a specific chatlog                             |
+| GET         | `/chat/:id`         |                    |                |              | Shows a specific chatlog                             |
 | POST        | `/chat/:id`         |      {text, date}                         | 200           | 404          | adds a new chat | 
-| PUT       | `/chat/:id`         |      {text}                         | 201           | 401         | edits a new chat | 
-| DELETE       | `/chat/:id`         |      {text}                         | 200         | 400         | deletes a new chat | 
+| PUT         | `/chat/:id`         |      {text}                         | 201           | 401         | edits a new chat | 
+| DELETE      | `/chat/:id`         |      {text}                         | 200         | 400         | deletes a new chat | 
