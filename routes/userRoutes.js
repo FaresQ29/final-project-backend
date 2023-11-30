@@ -9,15 +9,23 @@ const checkToken = require("../middleware/checkToken")
 //Get request to list all users (protected)
 
 
-//lists all users minues confidential information
-router.get("/all", async (req, res, next)=>{
+//lists all users minus confidential information
+router.get("/all", checkToken, async (req, res, next)=>{
     try{
-        const response = await User.find({})
-        console.log(response);
-        res.status(200).json(response)
+        //if the request is coming from the searchbar then use the input text as a filter in mongoose
+        const {searchval} = req.headers
+        if(searchval){
+            const response = await User.find({"name": { "$regex": `${searchval}`}}).select(["-password", "-email"])
+            res.status(200).json(response)                                                  
+        }
+        else{
+            const response = await User.find().select(["-password", "-email"])
+            res.status(200).json(response)                                                  
+
+        }
     }
     catch(err){
-        res.status(404)
+        res.status(404).json({msg: "Could not get list of users. Server error."})
     }
 })
 
@@ -35,5 +43,19 @@ router.get("/:id", checkToken, async (req, res, next)=>{
         res.status(402).json({msg: "Error retrieving user"})
     }
 })
+
+//updates the user objects
+router.put("/add-update/:id/", async(req, res)=>{
+    const userId = req.params.id;
+    try{
+        const updatedUser = await User.findByIdAndUpdate(userId, req.body)
+        res.status(201).json({userObj: updatedUser, msg: "Successfully modified user"})
+    }
+    catch(err){
+        //add error
+        res.status(201).json({msg: "Could not modify user"})
+    }
+})
+
 
 module.exports = router

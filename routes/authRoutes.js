@@ -26,11 +26,12 @@ router.post("/register", async (req, res, next)=>{
         const userId = response._id;
 
         const token = jwt.sign(
-            { userId },
+            { id: userId },
             process.env.SECRET,
             {expiresIn: maxAge}
         )
-        res.status(200).json( {userId: response._id, userName: response.name, authToken: token, msg: "Successfully  registered"} )
+
+        res.status(200).json( { name: response.name, authToken: token, msg: "Successfully  registered"} )
     }
     catch(err){
         res.status(404).json({msg: "Could not connect to the server", err})
@@ -52,8 +53,7 @@ router.post("/login", async (req, res, next)=>{
         //check if password matches
         const checkPassword = await bcrypt.compare(password, user.password)
         if(!checkPassword){return res.status(422).json({msg: "Invalid password."})}
-        const secret = process.env.SECRET
-        const token = jwt.sign({id: user._id}, secret)
+        const token = jwt.sign({id: user._id}, process.env.SECRET)
         res.status(200).json({authToken: token, name:user.name, email: user.email, msg: "Successfully logged in"})
     }
     catch(err){

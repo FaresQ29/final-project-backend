@@ -10,11 +10,19 @@ const userSchema = new Schema({
     friendRequests: [{type: Schema.Types.ObjectId, ref: "User"}],
     communities: [{type: Schema.Types.ObjectId, ref: "Community"}],
     userDetails: {
-        dateOfBirth: String,
-        profileImg: String,
-        bio: String,
-        location: String
-    }
+        dateOfBirth: {type: String, default:""},
+        profileImg: {type: String, default:""},
+        bio: {type: String, default:""},
+        location: {type: String, default:""},
+    },
+    updates: [{
+        text: String,
+        updateComments: [{
+            updateCommentText: String,
+            commentAuthor: {type: Schema.Types.ObjectId, ref: "User"}
+        }]
+    }]
+
 })
 
 const User = Model("User", userSchema)
