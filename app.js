@@ -22,3 +22,7 @@ app.use("/user",userRoutes)
 //Auth Routes
 const authRoutes = require("./routes/authRoutes")
 app.use("/auth",authRoutes)
+
+//Community Routes
+const commRoutes = require("./routes/communityRoutes")
+app.use("/community", commRoutes)

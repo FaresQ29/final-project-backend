@@ -3,20 +3,27 @@ const Schema = mongoose.Schema
 const Model = mongoose.model
 
 const communitySchema = new Schema({
-    communityName: {type: String, required: true, unique: true},
+    name: {type: String, required: true, unique: true},
+    img: String,
     dateCreated: {type: String, required: true},
-    communityBio: {type: String, required: true},
-    communityAdmin: [{type: Schema.Types.ObjectId, ref: "User"}],
-    communityMembers: [{type: Schema.Types.ObjectId, ref: "User"}],
-    communityContent: [ 
+    description: {type: String, required: true},
+    admin: {type: Schema.Types.ObjectId, ref: "User"},
+    members: [{type: Schema.Types.ObjectId, ref: "User"}],
+    themes: [{type: String, required: true}],
+    content: [ 
         {
             post: String,
-            comments : [{userComment: String, commentAuthor: [{type: Schema.Types.ObjectId, ref: "User"}]}]
+            comments : [
+                {
+                    userComment: String,
+                    commentAuthor: [{type: Schema.Types.ObjectId, ref: "User"}],
+                    commentDate: String
+                }
+            ]
         }
     ]
-
 })
 
-const Community = Model("User", communitySchema)
+const Community = Model("Community", communitySchema)
 
 module.exports = Community
