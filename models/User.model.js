@@ -17,9 +17,14 @@ const userSchema = new Schema({
     },
     updates: [{
         text: String,
+        postDate: String,
         updateComments: [{
             updateCommentText: String,
-            commentAuthor: {type: Schema.Types.ObjectId, ref: "User"}
+            commentAuthor: String,
+            authorId: Schema.Types.ObjectId,
+            date: String,
+            commentId: String,
+            editDate: {type: String, default:""}
         }]
     }]
 

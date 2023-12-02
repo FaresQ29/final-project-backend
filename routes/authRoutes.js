@@ -64,7 +64,7 @@ router.post("/login", async (req, res, next)=>{
 router.get('/verify', checkToken, async (req, res, next) => {       
     const {id} = req.payload
     try{
-        const user = await User.findById(id)
+        const user = await User.findById(id).populate("friendRequests" ,["-password", "-friendRequests"])
         res.status(200).json({token: req.token, user});
         console.log("token worked");
       
