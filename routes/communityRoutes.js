@@ -2,11 +2,9 @@ const express = require("express");
 const router = express.Router()
 const Community = require("../models/Community.model")
 const {url} = require("../config.js")
-const checkToken = require("../middleware/checkToken")
 
 
-
-router.get("/all", checkToken, async (req, res)=>{
+router.get("/all", async (req, res)=>{
     try{
         const response = await Community.find({})
         .populate("admin", "-password -friendRequests")

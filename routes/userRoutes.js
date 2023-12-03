@@ -15,7 +15,9 @@ router.get("/all", checkToken, async (req, res, next)=>{
         //if the request is coming from the searchbar then use the input text as a filter in mongoose
         const {searchval} = req.headers
         if(searchval){
-            const response = await User.find({"name": { "$regex": `${searchval}`}}).select(["-password", "-email"])
+            const response = await User.find({"name": { "$regex": `${searchval}`}})
+            .select(["-password", "-email"])
+            .populate("communities")
             res.status(200).json(response)                                                  
         }
         else{
@@ -34,6 +36,7 @@ router.get("/:id", checkToken, async (req, res, next)=>{
     const id = req.params.id
     try{
         const user = await User.findById(id, "-password -_id")
+        .populate("communities")
         if(!user){
             return res.status(400).json({msg: "User not found"})
         }
