@@ -32,11 +32,11 @@ router.get("/all", checkToken, async (req, res, next)=>{
 })
 
 //shows user profile minus the confidential information
-router.get("/:id", checkToken, async (req, res, next)=>{
+router.get("/find/:id", checkToken, async (req, res, next)=>{
     const id = req.params.id
     try{
-        const user = await User.findById(id, "-password -_id")
-        .populate("communities")
+        const user = await User.findById(id, "-password")
+        console.log(user);
         if(!user){
             return res.status(400).json({msg: "User not found"})
         }

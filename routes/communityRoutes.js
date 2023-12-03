@@ -11,6 +11,7 @@ router.get("/all", async (req, res)=>{
         const response = await Community.find({})
         .populate("admin", "-password -friendRequests")
         .populate("members", "-password -friendRequests")
+
         res.status(201).json(response)
     }
     catch(err){

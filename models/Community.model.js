@@ -13,11 +13,14 @@ const communitySchema = new Schema({
     content: [ 
         {
             post: String,
+            date: String,
+            postAuthor: {type: Schema.Types.ObjectId, ref: "User"},
             comments : [
                 {
                     userComment: String,
                     commentAuthor: [{type: Schema.Types.ObjectId, ref: "User"}],
-                    commentDate: String
+                    commentDate: String,
+                    editDate: {type: String, default: ""}
                 }
             ]
         }
