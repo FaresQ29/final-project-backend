@@ -5,6 +5,7 @@ const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken")
 const {url} = require("../config.js")
 const checkToken = require("../middleware/checkToken")
+
 //to set the token expiry to 3 days
 const maxAge = 3*24*60*60;
 
@@ -30,13 +31,14 @@ router.post("/register", async (req, res, next)=>{
             process.env.SECRET,
             {expiresIn: maxAge}
         )
+        res.status(200).json( { name: response.name, email: response.email, password: passwordHash, authToken: token, msg: "Successfully  registered"} )
 
-        res.status(200).json( { name: response.name, authToken: token, msg: "Successfully  registered"} )
     }
     catch(err){
         res.status(404).json({msg: "Could not connect to the server", err})
     }
 })
+
 
 
 // Login user post request
@@ -54,20 +56,25 @@ router.post("/login", async (req, res, next)=>{
         const checkPassword = await bcrypt.compare(password, user.password)
         if(!checkPassword){return res.status(422).json({msg: "Invalid password."})}
         const token = jwt.sign({id: user._id}, process.env.SECRET)
+
         res.status(200).json({authToken: token, name:user.name, email: user.email, msg: "Successfully logged in"})
+
+    
     }
     catch(err){
         res.status(401).json({msg: "Cannot login"})
     }
 })
 
-router.get('/verify', checkToken, async (req, res, next) => {       
+router.get('/verify', checkToken, async (req, res, next) => {    
+    
     const {id} = req.payload
     try{
         const user = await User.findById(id).populate("friendRequests" ,["-password", "-friendRequests"])
         res.status(200).json({token: req.token, user});
         console.log("token worked");
-      
+
+
     }
     catch(err){
         res.status(400).json({msg: "could not verify user"})
@@ -75,8 +82,6 @@ router.get('/verify', checkToken, async (req, res, next) => {
 
     }
 });
-
-
 
 
 module.exports = router

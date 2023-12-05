@@ -1,10 +1,10 @@
 const express = require("express");
-const router = express.Router()
-const User = require("../models/user.model")
-const bcrypt = require("bcrypt")
-const jwt = require("jsonwebtoken")
-const {url} = require("../config.js")
-const checkToken = require("../middleware/checkToken")
+const router = express.Router();
+const User = require("../models/user.model");
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+const {url} = require("../config.js");
+const checkToken = require("../middleware/checkToken");
 
 //Get request to list all users (protected)
 
@@ -36,7 +36,7 @@ router.get("/find/:id", checkToken, async (req, res, next)=>{
     const id = req.params.id
     try{
         const user = await User.findById(id, "-password")
-        console.log(user);
+   
         if(!user){
             return res.status(400).json({msg: "User not found"})
         }

@@ -3,9 +3,9 @@ const Schema = mongoose.Schema
 const Model = mongoose.model
 
 const chatSchema = new Schema({
-    chatLogs: [{text: String, date: Date()}],
-    userOne: {type: Schema.Types.ObjectId, ref: "User"},
-    userTwo: {type: Schema.Types.ObjectId, ref: "User"}
+        user1: String,
+        user2: String
+
 })
 
 const Chat = Model("Chat", chatSchema)

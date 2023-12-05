@@ -1,9 +1,10 @@
 require("dotenv").config();
-
 const express = require("express");
 const app = express();
+
+
 const { middleWareConfig, mongoConnect } = require("./config");
-const { default: axios } = require("axios");
+
 
 //for configuration:
 middleWareConfig(app)
@@ -15,6 +16,8 @@ mongoConnect(app)
 app.get("/test", (req, res)=>{
     res.send("verified!")
 })
+
+
 //User Routes
 const userRoutes = require("./routes/userRoutes")
 app.use("/user",userRoutes)
@@ -26,3 +29,7 @@ app.use("/auth",authRoutes)
 //Community Routes
 const commRoutes = require("./routes/communityRoutes")
 app.use("/community", commRoutes)
+
+//Community Routes
+const chatRoutes = require("./routes/chatRoutes")
+app.use("/chat", chatRoutes)

@@ -3,6 +3,7 @@ const logger = require("morgan");
 const mongoose = require("mongoose")
 const cookieParser = require("cookie-parser");
 
+
 const cors = require("cors");
 
 //links
@@ -15,9 +16,6 @@ const url = `http://localhost:${PORT}`
 // Middleware configuration
 function middleWareConfig(app){
   app.use(cors());
-
-
-
   // In development environment the app logs
   app.use(logger("dev"));
 
@@ -28,11 +26,11 @@ function middleWareConfig(app){
 
 }
 
+
 //connect to mongoose
 async function mongoConnect(app){
-  const url = mongoServer;
   try{
-      const response = await mongoose.connect(url)
+      const response = await mongoose.connect(mongoServer)
       console.log("Connected to mongoose");
       app.listen(PORT, ()=>{console.log("Listening")})
   }
