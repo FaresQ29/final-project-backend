@@ -15,6 +15,7 @@ router.post("/register", async (req, res, next)=>{
     const {name, email, password} = req.body
     if(!name) return res.status(422).json({msg: "Name is required"})
     if(!email) return res.status(422).json({msg: "Email is required"})
+    //if(!/^([\w.*-]+@([\w-]+\.)+[\w-]{2,4})?$/.test(email)) return res.status(422).json({msg: "Check email format"})
     if(!password) return res.status(422).json({msg: "Password is required"})
     const userExists = await User.findOne({email:email})
     if(userExists) return res.status(422).json({msg: "Email is already registered"})
@@ -45,8 +46,11 @@ router.post("/register", async (req, res, next)=>{
 router.post("/login", async (req, res, next)=>{
     const { email, password} = req.body
     //Validations for email, pass and check if user actually exists in db
-    if(!email) return res.status(422).json({msg: "email is required"})
-    if(!password) return res.status(422).json({msg: "password is required"})
+    //if(!/^([\w.*-]+@([\w-]+\.)+[\w-]{2,4})?$/.test(email)) return res.status(422).json({msg: "Check email format"})
+    if(!email) return res.status(422).json({msg: "Email is required"})
+    if(!password) return res.status(422).json({msg: "Password is required"})
+
+
     //check if email exists
     const user = await User.findOne({email})
     if(!user){return res.status(422).json({msg: "Email doesn't exist."})}
