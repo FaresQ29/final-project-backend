@@ -4,7 +4,8 @@
   "description": "# Description A social media user profile based webapp. Users can interact with each other in various manners such as adding each other as friends, chatting, or joining similar communities.",
   "main": "app.js",
   "scripts": {
-    "start": "nodemon app.js"
+    "start": "nodemon app.js",
+    "build": "npm install"
   },
   "keywords": [],
   "author": "",
