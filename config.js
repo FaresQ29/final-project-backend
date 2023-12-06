@@ -8,7 +8,7 @@ const cors = require("cors");
 
 //links
 const mongoServer = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.smk19mf.mongodb.net/Final-Project-Database`;
-const PORT = 3000; 
+const PORT = process.env.PORT ; 
 const url = `http://localhost:${PORT}`
 
 
