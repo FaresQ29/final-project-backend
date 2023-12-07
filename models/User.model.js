@@ -14,6 +14,7 @@ const userSchema = new Schema({
         profileImg: {type: String, default:""},
         bio: {type: String, default:""},
         location: {type: String, default:""},
+        gender : {type: String, enum: ['Male', 'Female', ""], default: "" }
     },
     updates: [{
         text: String,
@@ -24,7 +25,7 @@ const userSchema = new Schema({
             authorId: Schema.Types.ObjectId,
             date: String,
             commentId: String,
-            editDate: {type: String, default:""}
+            editDate: {type: String, default:""},
         }]
     }]
 
