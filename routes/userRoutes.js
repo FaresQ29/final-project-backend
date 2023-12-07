@@ -18,6 +18,7 @@ router.get("/all", checkToken, async (req, res, next)=>{
             const response = await User.find({"name": { "$regex": `${searchval}`}})
             .select(["-password", "-email"])
             .populate("communities")
+            .populate("friendList")
             res.status(200).json(response)                                                  
         }
         else{
