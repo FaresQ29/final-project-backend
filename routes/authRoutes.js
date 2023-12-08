@@ -15,7 +15,7 @@ router.post("/register", async (req, res, next)=>{
     const {name, email, password} = req.body
     if(!name) return res.status(422).json({msg: "Name is required"})
     if(!email) return res.status(422).json({msg: "Email is required"})
-    //if(!/^([\w.*-]+@([\w-]+\.)+[\w-]{2,4})?$/.test(email)) return res.status(422).json({msg: "Check email format"})
+    if(!/^([\w.*-]+@([\w-]+\.)+[\w-]{2,4})?$/.test(email)) return res.status(422).json({msg: "Check email format"})
     if(!password) return res.status(422).json({msg: "Password is required"})
     const userExists = await User.findOne({email:email})
     if(userExists) return res.status(422).json({msg: "Email is already registered"})
